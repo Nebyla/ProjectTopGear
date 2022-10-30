@@ -1,14 +1,16 @@
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/test')
 
-var Gear = mongoose.model('Gear', { name: String })
+var schema = mongoose.Schema({ name: String })
+
+schema.methods.meow = function(){
+    console.log(this.get("name") + " Самая лучшая машина на планете это .....")
+}
+
+var Gear = mongoose.model('Gear', schema)
 
 var Clarcson = new Gear({ name: 'Джереми Кларксон' })
 Clarcson.save(function (err) {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log('Привет')
-    }
+    Clarcson.meow()
 })
 
