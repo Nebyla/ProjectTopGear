@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/ProjectTopGear')
+var session = require("express-session")
 
 
 var gears = require('./routes/gears');
@@ -24,6 +25,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/gears', gears);
+
+app.use(session({
+  secret: "TopGear",
+  cookie:{maxAge:60*1000},
+  resave: true,
+  saveUninitialized: true	
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
