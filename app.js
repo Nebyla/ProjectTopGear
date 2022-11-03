@@ -26,11 +26,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/gears', gears);
 
+var MongoStore = require('connect-mongo');(session);
 app.use(session({
-  secret: "TopGear",
+  secret: "ProjectTopGear",
   cookie:{maxAge:60*1000},
   resave: true,
-  saveUninitialized: true	
+  saveUninitialized: true,
+  store: MongoStore.create({mongoUrl: 'mongodb://localhost/ProjectTopGear'})
 }))
 
 app.use('/', indexRouter);
