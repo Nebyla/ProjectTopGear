@@ -9,8 +9,8 @@ await client.connect();
 var database = client.db("ProjectTopGear");
 database.dropDatabase()
 database = client.db("ProjectTopGear");
-const Gear = database.collection("Gear");
-const result = await Gear.insertMany(data);
+const gears = database.collection("gears");
+const result = await gears.insertMany(data);
 console.log(`${result.insertedCount} documents were inserted`);
 } finally {
 await client.close();

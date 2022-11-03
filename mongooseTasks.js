@@ -1,14 +1,15 @@
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/test')
+const { Gears } = require('../models/gear')
+mongoose.connect('mongodb://localhost/ProjectTopGear')
 var Gear = require("./models/gear").Gear
 
-var gear = new Gear({
+var gears = new Gears({
     title: "Джереми Кларксон - телеведущий",
     nick: "Clarcson"
     })
     
     
-    console.log(gear)
-    gear.save(function(err, gear, affected){
-        console.log(gear.title)
+    console.log(gears)
+    gears.save(function(err, gears, affected){
+        console.log(gears.title)
     })

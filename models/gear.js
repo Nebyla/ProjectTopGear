@@ -4,16 +4,18 @@ var Schema = mongoose.Schema
 
 var gearSchema = new Schema({
 title: String,
-nick: {
+nick: 
+{
 type: String,
 unique: true,
 required: true
 },
 avatar: String,
 desc: String,
-created:{
+created:
+{
 type:Date,
 default:Date.now
 }
 })
-module.exports.Gear = mongoose.model("Gear", gearSchema)
+module.exports.Gear = mongoose.model("gears", gearSchema)

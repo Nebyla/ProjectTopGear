@@ -23,15 +23,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Главная</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Clarcson">Джереми Кларксон</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Hamond">Ричард Хаммонд</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Mey">Джеймс Мей</a>
-            </li>
+            <% menu.forEach(function(gear){ %>
+                <li class="nav-item">
+                <a class="nav-link" href="/gears/<%=gear.nick%>"><%=gear.title%></a>
+                </li>
+                <% }) %>  
         </ul>
         <ul class="navbar-nav navbar-right">
             <li>
