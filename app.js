@@ -6,9 +6,9 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/ProjectTopGear')
 var session = require("express-session")
-
-
 var gears = require('./routes/gears');
+var Gear = require("./models/gear").Gear
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -34,11 +34,22 @@ app.use(session({
   saveUninitialized: true,
   store: MongoStore.create({mongoUrl: 'mongodb://localhost/ProjectTopGear'})
 }))
+
 app.use(function(req,res,next){
   req.session.counter = req.session.counter +1 || 1
   next()
 })
 
+app.use(function(req,res,next){
+  res.locals.nav = []
+  Gear.find(null,{_id:0,title:1,nick:1},function(err,result){
+      if(err) throw err
+      res.locals.nav = result
+      next()
+  })
+})
+
+app.use(require("./middleware/createMenu.js"))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -57,7 +68,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error', {title:'Ошибка', menu:[]});
+  res.render('error', {title:'Ошибка'});
 });
 
 module.exports = app;

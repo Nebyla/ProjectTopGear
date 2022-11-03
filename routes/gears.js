@@ -10,26 +10,15 @@ router.get('/', function(req, res, next) {
 
 /* Страница ведущих */
 router.get('/:nick', function(req, res, next) {
-  async.parallel([
-          function(callback){
-              Gear.findOne({nick:req.params.nick}, callback)
-          },
-          function(callback){
-              Gear.find({},{_id:0,title:1,nick:1},callback)
-          }
-      ],
-      function(err,result){
-          if(err) return next(err)
-          var gear = result[0]
-          var gears = result[1] || []
-          if(!gear) return next(new Error("Нет такого ведущего в Top Gear"))
-          res.render('gear', {
-              title: gear.title,
-              picture: gear.avatar,
-              desc: gear.desc,
-              menu: gears
-          });
-      })
+    Gear.findOne({nick:req.params.nick}, function(err,gear){
+        if(err) return next(err)
+        if(!gear) return next(new Error("Нет такого ведущего для поиска"))
+        res.render('gear', {
+            title: gear.title,
+            picture: gear.avatar,
+            desc: gear.desc
+        })
+    })
 })
 
 
