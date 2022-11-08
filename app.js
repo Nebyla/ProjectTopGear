@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/gears', gears);
+
 
 var MongoStore = require('connect-mongo');(session);
 app.use(session({
@@ -54,7 +54,7 @@ app.use(require("./middleware/createUser.js"))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/gears', gears);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

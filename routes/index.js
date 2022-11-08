@@ -4,12 +4,14 @@ var Gear = require("../models/gear").Gear
 var User = require("./../models/user").User
 
 
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     Gear.find({},{_id:0,title:1,nick:1},function(err,menu){
       req.session.greeting = "Hi!!!",
       res.cookie('greeting','Hi!!!').render('index', {
-                              title: 'Express',
+                              title: 'Top Gear',
                               menu: menu,
                               counter: req.session.counter,
                           });
