@@ -12,13 +12,13 @@ router.get('/', function(req, res, next) {
 
 /* Страница ведущих */
 router.get('/:nick' , function(req, res, next) {
-    db.query(`SELECT * FROM gods WHERE gears.nick = '${req.params.nick}'`, (err, gears) => {
+    db.query(`SELECT * FROM gears WHERE gears.nick = '${req.params.nick}'`, (err, gears) => {
         if(err) {
         console.log(err);
         if(err) return next(err)
         }else {
             if(err) return next(err)
-            if(gears.lenght == 0) return next(new Error("Нет такого героя для поиска"))
+            if(gears.lenght == 0) return next(new Error("Нет такого ведущего для поиска"))
             var gear = gears[0];
             res.render('gear', {
                 title: gear.title,
