@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* Страница ведущих */
-router.get('/:nick' ,checkAuth, function(req, res, next) {
+router.get('/:nick' , function(req, res, next) {
     db.query(`SELECT * FROM gods WHERE gears.nick = '${req.params.nick}'`, (err, gears) => {
         if(err) {
         console.log(err);
