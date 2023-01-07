@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
-var Gear = require("../models/gear").Gear
-var checkAuth = require("./../middleware/checkAuth.js")
+var db = require('../mySQLConnect.js');
+//var Gear = require("../models/gear").Gear
+//var checkAuth = require("./../middleware/checkAuth.js")
 //var async = require("async")
 
 /* GET users listing. */
@@ -12,17 +12,23 @@ router.get('/', function(req, res, next) {
 
 /* Страница ведущих */
 router.get('/:nick' ,checkAuth, function(req, res, next) {
-    Gear.findOne({nick:req.params.nick}, function(err,gear){
+    db.query(`SELECT * FROM gods WHERE gears.nick = '${req.params.nick}'`, (err, gears) => {
+        if(err) {
+        console.log(err);
         if(err) return next(err)
-        if(!gear) return next(new Error("Нет такого ведущего для поиска"))
-        res.render('gear', {
-            title: gear.title,
-            picture: gear.avatar,
-            desc: gear.desc
+        }else {
+            if(err) return next(err)
+            if(gears.lenght == 0) return next(new Error("Нет такого героя для поиска"))
+            var gear = gears[0];
+            res.render('gear', {
+                title: gear.title,
+                picture: gear.avatar,
+                desc: gear.about
+                })
+            }
         })
     })
-})
-
+    
 
 
 
